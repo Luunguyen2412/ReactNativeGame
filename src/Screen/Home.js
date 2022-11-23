@@ -47,7 +47,7 @@ export default function Home({navigation}) {
             paddingVertical: 10,
             margin: 20,
           }}
-          onPress={() => {}}>
+          onPress={() => navigation.navigate('SpaceWar')}>
           <Text style={{fontWeight: 'bold', color: 'white', fontSize: 30}}>
             Space War
           </Text>

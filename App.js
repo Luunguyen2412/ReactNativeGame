@@ -7,15 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {GameEngine} from 'react-native-game-engine';
-import {Finger} from './src/components/Finger';
-import entities from './src/entities';
-import Physics from './src/systems';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './src/Screen/Home';
 import FlappyDoge from './src/Screen/FlappyDoge';
+import SpaceWar from './src/Screen/SpaceWar';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +35,11 @@ export default function App() {
         <Stack.Screen
           name="FlappyDoge"
           component={FlappyDoge}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SpaceWar"
+          component={SpaceWar}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

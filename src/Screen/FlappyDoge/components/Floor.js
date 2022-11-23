@@ -1,10 +1,8 @@
 import Matter from 'matter-js';
 import React from 'react';
-import {Animated, View} from 'react-native';
+import {View} from 'react-native';
 
-const BirdIcon = require('../assets/calm.png');
-
-const Bird = props => {
+const Floor = props => {
   const widthBody = props.body.bounds.max.x - props.body.bounds.min.x;
   const heightBody = props.body.bounds.max.y - props.body.bounds.min.y;
 
@@ -14,34 +12,44 @@ const Bird = props => {
   const color = props.color;
 
   return (
-    <Animated.Image
-      source={BirdIcon}
+    <View
       style={{
+        backgroundColor: color,
         position: 'absolute',
         left: xBody,
         top: yBody,
         width: widthBody,
         height: heightBody,
       }}
-      resizeMode="stretch"
     />
   );
 };
 
 export default (world, color, pos, size) => {
-  const initialBird = Matter.Bodies.rectangle(
+  const initialFloor = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
     size.width,
     size.height,
-    {label: 'Bird'},
+    {
+      label: 'Floor',
+      isStatic: true,
+    },
   );
-  Matter.World.add(world, initialBird);
+  initialFloor.restitution = 1;
+
+  // // turns off collisions
+  // initialFloor.collisionFilter = {
+  //   group: -1,
+  //   category: 2,
+  //   mask: 0,
+  // };
+  Matter.World.add(world, initialFloor);
 
   return {
-    body: initialBird,
+    body: initialFloor,
     color,
     pos,
-    renderer: <Bird />,
+    renderer: <Floor />,
   };
 };

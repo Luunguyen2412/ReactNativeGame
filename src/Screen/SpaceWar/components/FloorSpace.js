@@ -1,10 +1,8 @@
 import Matter from 'matter-js';
 import React from 'react';
-import {Animated, View} from 'react-native';
+import {View} from 'react-native';
 
-const BirdIcon = require('../assets/calm.png');
-
-const Star = props => {
+const FloorSpace = props => {
   const widthBody = props.body.bounds.max.x - props.body.bounds.min.x;
   const heightBody = props.body.bounds.max.y - props.body.bounds.min.y;
 
@@ -16,9 +14,8 @@ const Star = props => {
   return (
     <View
       style={{
-        backgroundColor: 'yellow',
+        backgroundColor: color,
         position: 'absolute',
-        borderRadius: 40,
         left: xBody,
         top: yBody,
         width: widthBody,
@@ -28,28 +25,24 @@ const Star = props => {
   );
 };
 
-export default (world, label, pos, size) => {
-  const initialStar = Matter.Bodies.rectangle(
+export default (world, color, pos, size) => {
+  const initialFloor = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
     size.width,
     size.height,
-    {label, isStatic: true, isSensor: false},
+    {
+      label: 'FloorSpace',
+      isStatic: true,
+    },
   );
 
-  initialStar.restitution = 2;
-  // // turns off collisions
-  // initialStar.collisionFilter = {
-  //   group: -1,
-  //   category: 2,
-  //   mask: 0,
-  // };
-
-  Matter.World.add(world, initialStar);
+  Matter.World.add(world, initialFloor);
 
   return {
-    body: initialStar,
+    body: initialFloor,
+    color,
     pos,
-    renderer: <Star />,
+    renderer: <FloorSpace />,
   };
 };

@@ -1,5 +1,5 @@
 import Matter from 'matter-js';
-import {getPipeSizePosPair} from '../utils/random';
+import {getPipeSizePosPair} from '../../../utils/random';
 import {Dimensions} from 'react-native';
 
 const windowHeight = Dimensions.get('window').height;
@@ -13,8 +13,8 @@ const Physics = (entities, {touches, time, dispatch}) => {
     .filter(t => t.type === 'press')
     .forEach(t => {
       Matter.Body.setVelocity(entities.Bird.body, {
-        x: 5,
-        y: -5,
+        x: 0,
+        y: -3,
       });
     });
 
@@ -74,7 +74,24 @@ const Physics = (entities, {touches, time, dispatch}) => {
   // }
 
   //Role
-  Matter.Events.off(engine, 'collisionStart', event => {
+  Matter.Events.on(engine, 'collisionStart', event => {
+    var pairs = event.pairs;
+
+    var objA = pairs[0].bodyA.label;
+    var objB = pairs[0].bodyB.label;
+
+    console.log(objA + ' -> ' + objB);
+
+    if (
+      objB === 'Star1' &&
+      objB === 'Star2' &&
+      objB === 'Star3' &&
+      objB === 'Star4'
+    ) {
+      // dispatch({type: 'new_point'});
+      console.log('collision Star');
+    }
+
     // bat dau va cham
     // dispatch({type: 'game_over'});
     // dispatch({type: 'new_point'});
